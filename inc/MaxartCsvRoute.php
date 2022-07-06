@@ -1,17 +1,16 @@
 <?php
 
-
-
 defined("ABSPATH") or die('');
 
 class MaxartCsvRoute
 {
+    private $handled = false;
     public function post($routePath, $callback)
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') :
             return  false;
         endif;
-        $uri =  $_SERVER['REQUEST_URI'];
+        $uri = wp_strip_all_tags($_SERVER['REQUEST_URI']);
         if ($uri == $routePath) :
             if (is_string($callback)) :
                 return $this->string_handler($callback);
@@ -42,6 +41,8 @@ class MaxartCsvRoute
     }
     function __destruct()
     {
-        die;
+        if ($this->handled == true) {
+            die;
+        }
     }
 }
