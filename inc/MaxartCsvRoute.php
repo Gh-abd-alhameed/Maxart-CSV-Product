@@ -13,6 +13,7 @@ class MaxartCsvRoute
         $uri = wp_strip_all_tags($_SERVER['REQUEST_URI']);
         if ($uri == $routePath) :
             if (is_string($callback)) :
+                $this->handled = true;
                 return $this->string_handler($callback);
             else :
                 $this->handled = true;
